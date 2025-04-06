@@ -22,8 +22,6 @@ const levels = [
   "L400 - 1st Sem", "L400 - 2nd Sem"
 ];
 
-const successSound = new Audio("success.mp3");
-
 window.onload = () => {
   loadLevels(); // Load levels on page load
   alert("🎓 Welcome to EricusVault Hub GPA System!\nPowered by Prof_Ericus");
@@ -119,13 +117,14 @@ document.getElementById("gpaForm").addEventListener("submit", function (e) {
     <h3>Classification: <strong>${classification}</strong></h3>
   `;
 
-  successSound.play(); // Play sound on successful calculation
+  const successSound = new Audio("success.mp3");
+  successSound.play(); // Play success sound
 });
 
-// Reset button functionality
+// Function to reset the form
 function resetForm() {
-  document.getElementById("gpaForm").reset(); // Reset the form fields
-  document.getElementById("result").innerHTML = ""; // Clear the result section
+  document.getElementById("gpaForm").reset();
+  document.getElementById("result").innerHTML = "";
   loadLevels(); // Reload all course inputs
 }
 
