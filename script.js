@@ -41,7 +41,7 @@ window.onload = () => {
   });
 
   // Show welcome popup
-  alert("🎓 Welcome to EricusVault Hub GPA System!\nPowered by Prof_Ericus");
+  alert("🎓 Welcome to EricusVault Hub GPA System!\nDeveloped by Prof_Ericus");
 
   // Add WhatsApp link
   const whatsapp = document.createElement("a");
