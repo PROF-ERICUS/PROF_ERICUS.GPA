@@ -25,8 +25,14 @@ const levels = [
 const successSound = new Audio("success.mp3");
 
 window.onload = () => {
+  loadLevels(); // Load levels on page load
+  alert("🎓 Welcome to EricusVault Hub GPA System!\nPowered by Prof_Ericus");
+};
+
+// Function to load course levels
+function loadLevels() {
   const container = document.getElementById("levels");
-  container.innerHTML = "";
+  container.innerHTML = ""; // Clear previous levels
 
   levels.forEach((level, index) => {
     const levelDiv = document.createElement("div");
@@ -40,10 +46,11 @@ window.onload = () => {
     `;
 
     container.appendChild(levelDiv);
-    addCourse(index); // One default row
+    addCourse(index); // Start with one course row
   });
-};
+}
 
+// Function to add a course input
 function addCourse(index) {
   const courseDiv = document.getElementById(`courses-${index}`);
   const entry = document.createElement("div");
@@ -56,6 +63,7 @@ function addCourse(index) {
   courseDiv.appendChild(entry);
 }
 
+// Function to calculate GPA classification
 function getFinalClass(gpa) {
   if (gpa >= 3.60) return "First Class Honours";
   if (gpa >= 3.00) return "Second Class Honours (Upper Division)";
@@ -64,6 +72,7 @@ function getFinalClass(gpa) {
   return "Not classified / Below Pass";
 }
 
+// Event listener for form submission
 document.getElementById("gpaForm").addEventListener("submit", function (e) {
   e.preventDefault();
 
@@ -82,6 +91,7 @@ document.getElementById("gpaForm").addEventListener("submit", function (e) {
       const credit = parseFloat(credits[i].value);
 
       if (!grade && !credits[i].value) continue; // Skip empty rows
+
       if (!gradePoints.hasOwnProperty(grade) || isNaN(credit)) {
         alert(`Invalid input at ${levelName}. Grade: ${grade}, Credit: ${credit}`);
         return;
@@ -109,16 +119,18 @@ document.getElementById("gpaForm").addEventListener("submit", function (e) {
     <h3>Classification: <strong>${classification}</strong></h3>
   `;
 
-  successSound.play();
+  successSound.play(); // Play sound on successful calculation
 });
 
+// Reset button functionality
 function resetForm() {
-  document.getElementById("gpaForm").reset();
-  document.getElementById("result").innerHTML = "";
-  window.onload(); // Recreate the inputs
+  document.getElementById("gpaForm").reset(); // Reset the form fields
+  document.getElementById("result").innerHTML = ""; // Clear the result section
+  loadLevels(); // Reload all course inputs
 }
 
-// Mode toggle
-function toggleMode() {
+// Dark mode toggle functionality
+document.getElementById("modeToggle").addEventListener("click", function () {
   document.body.classList.toggle("dark-mode");
-}
+  this.textContent = document.body.classList.contains("dark-mode") ? "☀️ Light Mode" : "🌙 Dark Mode";
+});
