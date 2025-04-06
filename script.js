@@ -23,14 +23,7 @@ const levels = [
 ];
 
 window.onload = () => {
-  loadLevels(); // Load levels on page load
-  alert("🎓 Welcome to EricusVault Hub GPA System!\nPowered by Prof_Ericus");
-};
-
-// Function to load course levels
-function loadLevels() {
   const container = document.getElementById("levels");
-  container.innerHTML = ""; // Clear previous levels
 
   levels.forEach((level, index) => {
     const levelDiv = document.createElement("div");
@@ -44,11 +37,21 @@ function loadLevels() {
     `;
 
     container.appendChild(levelDiv);
-    addCourse(index); // Start with one course row
+    addCourse(index); // Start with one row
   });
-}
 
-// Function to add a course input
+  // Show welcome popup
+  alert("🎓 Welcome to EricusVault Hub GPA System!\nPowered by Prof_Ericus");
+
+  // Add WhatsApp link
+  const whatsapp = document.createElement("a");
+  whatsapp.href = "https://wa.link/wn9zbf";
+  whatsapp.className = "whatsapp-button";
+  whatsapp.target = "_blank";
+  whatsapp.innerText = "💬 Chat Prof_Ericus";
+  document.body.appendChild(whatsapp);
+};
+
 function addCourse(index) {
   const courseDiv = document.getElementById(`courses-${index}`);
   const entry = document.createElement("div");
@@ -61,7 +64,6 @@ function addCourse(index) {
   courseDiv.appendChild(entry);
 }
 
-// Function to calculate GPA classification
 function getFinalClass(gpa) {
   if (gpa >= 3.60) return "First Class Honours";
   if (gpa >= 3.00) return "Second Class Honours (Upper Division)";
@@ -70,7 +72,6 @@ function getFinalClass(gpa) {
   return "Not classified / Below Pass";
 }
 
-// Event listener for form submission
 document.getElementById("gpaForm").addEventListener("submit", function (e) {
   e.preventDefault();
 
@@ -88,7 +89,8 @@ document.getElementById("gpaForm").addEventListener("submit", function (e) {
       const grade = grades[i].value.toUpperCase().trim();
       const credit = parseFloat(credits[i].value);
 
-      if (!grade && !credits[i].value) continue; // Skip empty rows
+      // Skip if empty
+      if (!grade && !credits[i].value) continue;
 
       if (!gradePoints.hasOwnProperty(grade) || isNaN(credit)) {
         alert(`Invalid input at ${levelName}. Grade: ${grade}, Credit: ${credit}`);
@@ -116,20 +118,13 @@ document.getElementById("gpaForm").addEventListener("submit", function (e) {
     <h3>Final GPA: <strong>${finalGPA}</strong></h3>
     <h3>Classification: <strong>${classification}</strong></h3>
   `;
-
-  const successSound = new Audio("success.mp3");
-  successSound.play(); // Play success sound
 });
 
-// Function to reset the form
-function resetForm() {
-  document.getElementById("gpaForm").reset();
-  document.getElementById("result").innerHTML = "";
-  loadLevels(); // Reload all course inputs
-}
-
-// Dark mode toggle functionality
-document.getElementById("modeToggle").addEventListener("click", function () {
+// Mode toggle
+const toggleBtn = document.getElementById("modeToggle");
+toggleBtn.addEventListener("click", () => {
   document.body.classList.toggle("dark-mode");
-  this.textContent = document.body.classList.contains("dark-mode") ? "☀️ Light Mode" : "🌙 Dark Mode";
+  toggleBtn.textContent = document.body.classList.contains("dark-mode") 
+    ? "☀️ Light Mode" 
+    : "🌙 Dark Mode";
 });
